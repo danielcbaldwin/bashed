@@ -1,38 +1,31 @@
-# Helper function loading various enable-able files
-function _load_bash_additions() {
-  subdirectory="$1"
-  if [ ! -d "${DOTFILES}/bash/${subdirectory}" ]
-  then
-    continue
-  fi
-  FILES="${DOTFILES}/bash/${subdirectory}/*.bash"
-  for config_file in $FILES
+function load_bash_aliases() {
+  for name in $aliases
   do
-    if [ -e "${config_file}" ]; then
-      source $config_file
+    if [ -e "${BASHED_DIR}/aliases/${name}.bash" ]; then
+      source "${BASHED_DIR}/aliases/${name}.bash"
     fi
   done
 }
 
-# Function for reloading aliases
-function reload_aliases() {
-  _load_bash_additions "aliases"
+function load_bash_completion() {
+  for name in $completion
+  do
+    if [ -e "${BASHED_DIR}/completion/${name}.bash" ]; then
+      source "${BASHED_DIR}/completion/${name}.bash"
+    fi
+  done
 }
 
-# Function for reloading auto-completion
-function reload_completion() {
-  _load_bash_additions "completion"
-}
-
-# Function for reloading plugins
-function reload_plugins() {
-  _load_bash_additions "plugins"
+function load_bash_plugins() {
+  for name in $plugins
+  do
+    if [ -e "${BASHED_DIR}/plugins/${name}.bash" ]; then
+      source "${BASHED_DIR}/plugins/${name}.bash"
+    fi
+  done
 }
 
 _is_function ()
 {
-    _about 'sets $? to true if parameter is the name of a function'
-    _param '1: name of alleged function'
-    _group 'lib'
     [ -n "$(type -a $1 2>/dev/null | grep 'is a function')" ]
 }

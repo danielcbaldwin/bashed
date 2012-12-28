@@ -11,24 +11,18 @@ do
   done
 export BASHED_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
-# Load colors first so they can be used in base theme
-source "${BASHED_DIR}/bash/themes/colors.theme.bash"
-source "${BASHED_DIR}/bash/themes/base.theme.bash"
-
 # library
-LIB="${BASHED_DIR}/bash/lib/*.bash"
-for config_file in $LIB
+LIB_FILES=('colors' 'theme' 'enviroment' 'appearance' 'helpers' 'history' 'preexec')
+for lib_file in $LIB_FILES
 do
-  source $config_file
+  source "${BASHED_DIR}/lib/${lib_file}.bash"
 done
 unset config_file
 
-# Load enabled aliases, completion, plugins
-for file_type in "aliases" "completion" "plugins"
-do
-  _load_bash_additions $file_type
-done
-unset file_type
+# Load extras
+load_bash_aliases
+load_bash_completion
+load_bash_plugins
 
 if [[ $PROMPT ]]; then
     export PS1=$PROMPT

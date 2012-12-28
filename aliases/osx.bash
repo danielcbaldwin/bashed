@@ -1,4 +1,4 @@
-if [[ "$OSTYPE" =~ "darwin" ]]; then
+if [[ "$(uname -s)" =~ "darwin" ]]; then
   # Recursively delete `.DS_Store` files
   alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
 

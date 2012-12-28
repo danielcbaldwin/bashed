@@ -6,12 +6,17 @@ unset MAILCHECK
 # for brew
 export PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 
-# add python scripts bin
-export PATH="$PATH:~/.bin"
-
 # add MySQL bin
 export PATH="$PATH:/usr/local/mysql/bin"
 
 export BASH_THEME="daniel"
 
 source $DOTFILES/bash/setup.sh
+#
+# z
+. $DOTFILES/bash/bin/z/z.sh
+
+# Make the MySQL Ruby Gem build properly
+if [[ "$OSTYPE" =~ "darwin" ]]; then
+  export DYLD_LIBRARY_PATH="/usr/local/mysql/lib:$DYLD_LIBRARY_PATH"
+fi
