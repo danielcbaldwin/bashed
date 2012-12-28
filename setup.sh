@@ -1,14 +1,22 @@
 #!/usr/bin/env bash
 
-# set 256 colors
-export TERM=xterm-256color
+# Get working directory
+SOURCE="${BASH_SOURCE[0]}"
+export BASHED_DIR="$( dirname "$SOURCE" )"
+while [ -h "$SOURCE" ]
+do 
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+    export BASHED_DIR="$( cd -P "$( dirname "$SOURCE"  )" && pwd )"
+  done
+export BASHED_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 # Load colors first so they can be used in base theme
-source "${DOTFILES}/bash/themes/colors.theme.bash"
-source "${DOTFILES}/bash/themes/base.theme.bash"
+source "${BASHED_DIR}/bash/themes/colors.theme.bash"
+source "${BASHED_DIR}/bash/themes/base.theme.bash"
 
 # library
-LIB="${DOTFILES}/bash/lib/*.bash"
+LIB="${BASHED_DIR}/bash/lib/*.bash"
 for config_file in $LIB
 do
   source $config_file
